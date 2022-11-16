@@ -42,7 +42,7 @@ function roundOutcome(playerSelection, computerSelection) {
             return `Tie!`
         }
     } else {
-        throw new Error(`expected rock, paper, or scissors. Recieved ${playerSelection}`)
+        throw new Error(`expected rock, paper, or scissors. Received ${playerSelection}`)
     }
 }
 
