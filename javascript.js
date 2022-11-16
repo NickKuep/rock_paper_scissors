@@ -71,8 +71,34 @@ function randomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+/*
+    A loop that will generate and track 5 rounds of rock, paper, scissors
+Params: roundOutcome
+Results: a list of 5 rounds of roundOutcome and determine winner
+*/
+function playGame() {
+    let playerWin = 0
+    let computerWin = 0
+    
+    for (let i = 0; i < 5; i ++) {
+        let playerSelection = prompt('rock, paper, or scissors????????')
+        const computerSelection = generateComputerSelection();
+        const roundResult = roundOutcome(playerSelection, computerSelection)
+        console.log(roundResult)
+        if (roundResult.includes('You won!')) {
+            playerWin = playerWin + 1
+        } else if (roundResult.includes('You lost!')) {
+            computerWin = computerWin + 1
+        }
+    } 
+    if (playerWin > computerWin) {
+        console.log("WINNER, WINNER! Dinner tonight is chicken.......")
+    } else if (playerWin < computerWin) {
+        console.log("You lost! YOU ABSOLUTE BAFFOON")
+    } else {
+        console.log("You have tied! BOOOOORING!")
+    }
+    return
+}
 
-let playerSelection = process.argv[2] || 'rock';
-
-const outcome = playRound(playerSelection)
-console.log(outcome)
+playGame()
