@@ -1,12 +1,14 @@
-/*
-    Generates a round of rock paper scissors with the input of playerSelection and computerSelection.
-    Returns a roundOutcome
-*/
-function playRound(playerSelection) {
-    const computerSelection = generateComputerSelection()
-    const result = roundOutcome(playerSelection, computerSelection)
-    return result
-}
+//player Selection with button: rock, paper, or scissors
+const selectionButtons = document.querySelectorAll("[data-selection]");
+const pScore = document.getElementById("playerScore");
+const cScore = document.getElementById("computerScore");
+
+selectionButtons.forEach((selectionButton) => {
+  selectionButton.addEventListener("click", (e) => {
+    const playerSelection = selectionButton.dataset.selection;
+    playRound(playerSelection);
+  });
+});
 
 /* 
 Params: 
@@ -14,36 +16,59 @@ Params:
     computerSelection: String - The selection randomly chosen by the computer; can be [rock, paper, scissors]
 Returns:
     result: String - String formatted to display outcome information
-    error: Error - Incorrect selection data recieved
+    error: Error - Incorrect selection data received
 */
+
 function roundOutcome(playerSelection, computerSelection) {
-    if (playerSelection == `rock`) {
-        if (computerSelection == `rock`) {
-            return `Tie!`;
-        } else if (computerSelection == `paper`) {
-            return `You lost! ${computerSelection} beats ${playerSelection}`;
-        } else {
-            return `You won! ${playerSelection} beats ${computerSelection}` ;
-        }
-    } else if (playerSelection == `paper`) {
-        if (computerSelection == `rock`) {
-            return `You lost! ${computerSelection} beats ${playerSelection}`;
-        } else if (computerSelection == `paper`) {
-            return `Tie!`;
-        } else {
-            return `You won! ${playerSelection} beats ${computerSelection}`;
-        }
-    } else if (playerSelection == `scissors`) {
-        if (computerSelection == `rock`) {
-            return `You lost! ${computerSelection} beats ${playerSelection}`
-        } else if (computerSelection == `paper`) {
-            return `You won! ${playerSelection} beats ${computerSelection}`
-        } else {
-            return `Tie!`
-        }
+  console.log(playerSelection);
+  console.log(computerSelection);
+  if (playerSelection == `rock`) {
+    if (computerSelection == `rock`) {
+      return `Tie!`;
+    } else if (computerSelection == `paper`) {
+      return "computerWin";
     } else {
-        throw new Error(`expected rock, paper, or scissors. Received ${playerSelection}`)
+      return "playerWin";
     }
+  } else if (playerSelection == `paper`) {
+    if (computerSelection == `rock`) {
+      return "playerWin";
+    } else if (computerSelection == `paper`) {
+      return `Tie!`;
+    } else {
+      return "computerWin";
+    }
+  } else if (playerSelection == `scissors`) {
+    if (computerSelection == `rock`) {
+      return "computerWin";
+    } else if (computerSelection == `paper`) {
+      return "playerWin";
+    } else {
+      return `Tie!`;
+    }
+  } else {
+    throw new Error(
+      `expected rock, paper, or scissors. Received ${playerSelection}`
+    );
+  }
+}
+/*
+    Generates a round of rock paper scissors with the input of playerSelection and computerSelection.
+    Returns a roundOutcome
+*/
+
+function playRound(playerSelection) {
+  let computerSelection = generateComputerSelection();
+  const result = roundOutcome(playerSelection, computerSelection);
+  updateScore(result);
+  const compUl = document.querySelector("#computerChoice");
+  const compLi = document.createElement("li");
+  const pUl = document.querySelector("#playerChoice");
+  const pLi = document.createElement("li");
+  pLi.textContent = `${playerSelection}`;
+  pUl.appendChild(pLi);
+  compLi.textContent = `${computerSelection}`;
+  compUl.appendChild(compLi);
 }
 
 /* 
@@ -52,53 +77,45 @@ Params:
 Returns:
     result: String - 'rock' | 'paper' | 'scissors'
 */
-function generateComputerSelection () {
-    const rng = randomInt(3);
+function generateComputerSelection() {
+  const rng = randomInt(3);
 
-    if (rng == 0) {
-        return 'rock'
-    } else if (rng == 1) {
-        return 'paper'
-    } else {
-        return 'scissors'
-    }
+  if (rng == 0) {
+    return "rock";
+  } else if (rng == 1) {
+    return "paper";
+  } else {
+    return "scissors";
+  }
 }
 
 /*
     Determines the computerSelection: rock, paper, or scissors
 */
 function randomInt(max) {
-    return Math.floor(Math.random() * max);
+  return Math.floor(Math.random() * max);
 }
 
-/*
-    A loop that will generate and track 5 rounds of rock, paper, scissors
-Params: roundOutcome
-Results: a list of 5 rounds of roundOutcome and determine winner
-*/
-function playGame() {
-    let playerWin = 0
-    let computerWin = 0
-    
-    for (let i = 0; i < 5; i ++) {
-        let playerSelection = prompt('rock, paper, or scissors????????')
-        const computerSelection = generateComputerSelection();
-        const roundResult = roundOutcome(playerSelection, computerSelection)
-        console.log(roundResult)
-        if (roundResult.includes('You won!')) {
-            playerWin = playerWin + 1
-        } else if (roundResult.includes('You lost!')) {
-            computerWin = computerWin + 1
-        }
-    } 
-    if (playerWin > computerWin) {
-        console.log("WINNER, WINNER! Dinner tonight is chicken.......")
-    } else if (playerWin < computerWin) {
-        console.log("You lost! YOU ABSOLUTE BAFFOON")
-    } else {
-        console.log("You have tied! BOOOOORING!")
-    }
-    return
+function updateScore(result) {
+  let playerScore = Number(pScore.textContent);
+  let computerScore = Number(cScore.textContent);
+  if (result == "playerWin") {
+    playerScore = playerScore + 1;
+    pScore.textContent = `${playerScore}`;
+  } else if (result == "computerWin") {
+    computerScore = computerScore + 1;
+    cScore.textContent = `${computerScore}`;
+  }
+  if (playerScore >= 5) {
+    alert("Player Wins!");
+    resetGame();
+  } else if (computerScore >= 5) {
+    alert("Computer wins!");
+    resetGame();
+  }
 }
 
-playGame()
+function resetGame() {
+  pScore.textContent = "0";
+  cScore.textContent = "0";
+}

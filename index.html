@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="javascript.js"></script>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ROCK PAPER SCISSORS</title>
+    <script src="javascript.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="selections">
+      <button class="selection" data-selection="rock">Rock</button>
+      <button class="selection" data-selection="paper">Paper</button>
+      <button class="selection" data-selection="scissors">Scissors</button>
+    </div>
+    <div class="score">
+      <h2 id="playerTitle">PLAYER</h2>
+      <p id="playerScore">0</p>
+      <h2 id="computerTitle">COMPUTER</h2>
+      <p id="computerScore">0</p>
+    </div>
+    <div class="outcome">
+      <ul id="playerChoice"></ul>
+      <ul id="computerChoice"></ul>
+    </div>
+  </body>
 </html>
