@@ -1,0 +1,26 @@
+.score {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.selections {
+  display: flex;
+  justify-content: space-around;
+}
+
+.outcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+}
+#playerChoice {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+#computerChoice {
+  display: flex;
+  flex-direction: column-reverse;
+}
